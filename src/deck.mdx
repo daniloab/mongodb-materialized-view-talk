@@ -7,6 +7,7 @@ import Website from "./Website";
 import Thanks from "./Thanks";
 export { default as theme } from "./theme";
 export * as components from "./components";
+import MergeOut from './MergeOut'
 
 <Head>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,7 +60,34 @@ export * as components from "./components";
 
 <ul>
   <Appear>
-    <li>Deliver high-quality software</li>
+    <li>Database Objects</li>
+    <li>Results of Precomputed Query</li>
+    <li>Differences from Regular Views</li>
+  </Appear>
+</ul>
+
+---
+
+# Comparison with Standard Views
+
+<ul>
+  <Appear>
+    <li>MongoDb offer both</li>
+    <li>Materialized is saved on disk</li>
+    <li>$merge or $out stage to update the saved data</li>
+    <li>both results from aggregation pipeline</li>
+  </Appear>
+</ul>
+
+---
+
+# Indexes and Performance
+
+<ul>
+  <Appear>
+    <li>Standard use indexes from underlying collection</li>
+    <li>Materialized can has it own indexes</li>
+    <li>Materialized allow faster access to data reading from disk</li>
   </Appear>
 </ul>
 
@@ -69,7 +97,10 @@ export * as components from "./components";
 
 <ul>
   <Appear>
-    <li>Deliver high-quality software</li>
+    <li>aggregate performs the calc</li>
+    <li>$merge writes the output, update matched previous results</li>
+    <li>Regularly updates</li>
+    <li>Jobs</li>
   </Appear>
 </ul>
 
@@ -80,9 +111,11 @@ export * as components from "./components";
 <ul>
   <Appear>
     <li>Deliver high-quality software</li>
+    <li>Allow faster access to data</li>
     <li>Benefits in data privacy</li>
     <li>Increase of performance</li>
     <li>Split in databases</li>
+    <li>Simplify complex queries</li>
   </Appear>
 </ul>
 
@@ -92,9 +125,52 @@ export * as components from "./components";
 
 <ul>
   <Appear>
-    <li>Deliver high-quality software</li>
+    <li>Complex analytics queries</li>
+    <li>Improve performance</li>
+    <li>Support for real time dashboards</li>
+    <li>Cache frequently accessed data</li>
+    <li>Abstract data from many collections/tables into only one</li>
   </Appear>
 </ul>
+
+---
+
+# $merge and $out stage
+
+<ul>
+  <Appear>
+      <li>Can output to a collection in the same or different database.</li>
+      <li>Creates a new collection if the output collection does not already exist.</li>
+      <li>Can incorporate results (insert new documents, merge documents, replace documents, keep existing documents, fail the operation, process documents with a custom update pipeline) into an existing collection.</li>
+      <li>Can output to a sharded collection. Input collection can also be sharded.</li>
+      <li>Merge save/update a result in a collection</li>
+      <li>Out save/replace a result in a collection</li>
+  </Appear>
+</ul>
+
+---
+
+<MergeOut/>
+
+---
+
+<Code
+  title="Materialized Views with Merge Stage"
+  code={require("!raw-loader!./code/mv-merge.ts")}
+  showNumbers={false}
+  dark={true}
+  lang="ts"
+/>
+
+---
+
+<Code
+  title="Materialized Views with Out Stage"
+  code={require("!raw-loader!./code/mv-out.ts")}
+  showNumbers={false}
+  dark={true}
+  lang="ts"
+/>
 
 ---
 
@@ -102,7 +178,11 @@ export * as components from "./components";
 
 <ul>
   <Appear>
-    <li>Deliver high-quality software</li>
+    <li>Updated regularly</li>
+    <li>Careful with pipeline stages</li>
+    <li>Good use of indexes with group stage</li>
+    <li>Chunk Size</li>
+    <li>Shard Key</li>
   </Appear>
 </ul>
 
@@ -111,6 +191,13 @@ export * as components from "./components";
 # References
 
 - [On-Demand Materialized Views](https://www.mongodb.com/docs/manual/core/materialized-views/)
+- [View And Materialized View In MongoDB](https://mydbops.wordpress.com/2023/02/09/view-and-materialized-view-in-mongodb/)
+- [MongoDB View](https://devopedia.org/mongodb-view)
+- [On Demand Materialized Views: A Scalable Solution for Graphs, Analysis or Machine Learning](https://towardsdatascience.com/on-demand-materialized-views-a-scalable-solution-for-graphs-analysis-or-machine-learning-w-d3816af28f1)
+- [How to create and manage Mongo DB Materialized Views using triggers.](https://bonigopalan.medium.com/how-to-create-and-manage-mongo-db-materialized-views-using-triggers-a2fb58a4d1a0)
+- [$merge aggregation docs](https://www.mongodb.com/docs/manual/reference/operator/aggregation/merge/#mongodb-pipeline-pipe.-merge)
+- [$out aggregation docs](https://www.mongodb.com/docs/manual/reference/operator/aggregation/out/#mongodb-pipeline-pipe.-out)
+
 
 ---
 
